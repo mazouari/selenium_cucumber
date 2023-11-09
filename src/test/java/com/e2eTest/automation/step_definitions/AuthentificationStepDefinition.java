@@ -1,5 +1,7 @@
 package com.e2eTest.automation.step_definitions;
 
+import org.junit.Assert;
+
 import com.e2eTest.automation.page_objects.AuthentificationPage;
 import com.e2eTest.automation.utils.ConfigFileReader;
 import com.e2eTest.automation.utils.SeleniumUtils;
@@ -21,7 +23,7 @@ public class AuthentificationStepDefinition {
 		configFileReader = new ConfigFileReader();
 	}
 
-	/*TC_01*/
+	/*TC_01 valid*/
 	@Given("Je me connecte sur l application nopCommerce")
 	public void jeMeConnecteSurLApplicationNopCommerce() {
 		seleniumUtils.get(configFileReader.getProperties("home.recette"));
@@ -42,10 +44,21 @@ public class AuthentificationStepDefinition {
 		seleniumUtils.click(AuthentificationPage.getBtnLogin());
 	}
 
-	@Then("Je me redirige vers la page Home")
-	public void jeMeRedirigeVersLaPageHome() {
+	@Then("Je me redirige vers la page Home {string}")
+	public void jeMeRedirigeVersLaPageHome(String text) {
+		String message = AuthentificationPage.getDashboard().getText();
+		Assert.assertEquals(message, text);
 	}
 	
-	/*TC_02*/
+	/*TC_02 invalid*/
+	@Then("Je verifie le message d erreur {string}")
+	public void jeVerifieLeMessageDErreur(String string) {
+	}
+	
+	/*TC_03 Logout*/
+	@When("Je clique sur le bouton Logout")
+	public void jeCliqueSurLeBoutonLogout() {
+		seleniumUtils.click(AuthentificationPage.getBtnLogout());
+	}
 
 }
