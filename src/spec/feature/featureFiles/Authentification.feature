@@ -24,4 +24,4 @@ Feature: Je souhaite vérifier la page de connexion
     When Je saisis l email "admin@yourstore.com"
     And Je saisis le password "admin"
     And Je clique sur le bouton Log In
-    When Je clique sur le bouton Logout
+    Then Je clique sur le bouton Logout

@@ -9,41 +9,45 @@ import com.e2eTest.automation.utils.Setup;
 
 public class CatalogPage extends BasePage {
 
-
 	/* Retrieve web elements */
 
-
 	@FindBy(how = How.XPATH, using = "//p[normalize-space()='Catalog']")
-	private static WebElement menucatalog;
-	
+	private static WebElement menuCatalog;
+
 	@FindBy(how = How.XPATH, using = "//p[normalize-space()='Products']")
-	private static WebElement menuproducts;
-	
+	private static WebElement menuProducts;
+
 	@FindBy(how = How.XPATH, using = "//input[@id='SearchProductName']")
-	private static WebElement champproductname;
-	
+	private static WebElement champProductName;
+
 	@FindBy(how = How.XPATH, using = "//button[@id='search-products']")
-	private static WebElement btnsearch;
-	
+	private static WebElement btnSearch;
+
+	@FindBy(how = How.XPATH, using = "//td[normalize-space()='Lenovo IdeaCentre 600 All-in-One PC']")
+	private static WebElement nbrResults;
 
 	public CatalogPage() {
 		super(Setup.getDriver());
 	}
 
-	public static WebElement getmenucatalog() {
-		return menucatalog;
+	public static WebElement getMenuCatalog() {
+		return menuCatalog;
 	}
 
-	public static WebElement getmenuproducts() {
-		return menuproducts;
+	public static WebElement getMenuProducts() {
+		return menuProducts;
 	}
 
-	public static WebElement getchampproductname() {
-		return champproductname;
+	public static WebElement getChampProductName() {
+		return champProductName;
 	}
-	
-	public static WebElement getbtnsearch() {
-		return btnsearch;
+
+	public static WebElement getBtnSearch() {
+		return btnSearch;
+	}
+
+	public static WebElement getNbrResults() {
+		return nbrResults;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.csv.CSVFormat;
@@ -18,10 +19,12 @@ import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.testng.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 /**
  * This class is used to perform various kinds of validations in the test cases.
@@ -171,18 +174,167 @@ public class Validations extends BasePage {
 		return false;
 	}
 
-	/**
-	 * methode Check field is empty.
-	 * 
-	 * @param elementAttr
-	 */
-	public void checkFieldIsEmpty(WebElement elementAttr) {
-		WebElement inputText = elementAttr;
-		String text = inputText.getAttribute("value");
+    /**
+     * Assert command for checking the url in selenium webdriver
+     * @param string URL
+     */
+    public void checkChangedURL(String expectedURL)
+    {
+    	String URL = driver.getCurrentUrl();
+    	Assert.assertEquals(URL, expectedURL);
+    }
+    
+    /**
+     * method to verify the actual value with expected value.
+     *
+     * @param actual              actual text displayed
+     * @param expected            expected text to be displayed
+     * @param message             message should be displayed on failure of assertion
+     * @param screenshotOnFailure
+     * @param exitOnFailure
+     * @return true, si c'est vrai
+     */
+    public boolean verifyEquals(Object actual, Object expected, String message, boolean screenshotOnFailure, boolean exitOnFailure)
+    {
+        testStatus = true;
+        Reporter.log("<br>");
+        try
+        {
+            Assert.assertEquals(actual, expected, message);
+            Reporter.log("<Font Color=#008000> PASS </Font>" + message);
 
-		if (text.isEmpty()) {
-			LOGGER.info("input box is empty");
-		}
-	}
+        }
+        catch (AssertionError e)
+        {
+
+            testStatus = false;
+
+            if (screenshotOnFailure)
+            {
+
+                Reporter.log("<Font Color=red> FAIL </Font> " + message + " Actual: " + actual + " Expected: " + expected
+                    + " Please check the screenshot " + "<a href='" + screenShot()
+                    + "'> <Font Color=red> here </Font> </a>");
+
+            }
+
+            if (exitOnFailure)
+            {
+                Reporter.log("<br>");
+                Reporter.log("Exiting this function as exitOnFail flag is set to True. Will move to next test.");
+                throw e;
+            }
+
+            Reporter.log("<Font Color=red> FAIL </Font> " + message + " Actual: " + actual + " Expected: " + expected);
+
+        }
+        return testStatus;
+    }
+
+    /**
+     * method to verify if the condition is true.
+     *
+     * @param condition           statement to verify
+     * @param message             message should be displayed on failure of assertion
+     * @param screenshotOnFailure true if screenshot has to be taken in case of failure
+     * @param exitOnFailure       true if execution to be stopped in case of failure
+     * @return true if assertion passes, false if fails
+     */
+    public boolean verifyTrue(boolean condition, String message,
+        boolean screenshotOnFailure, boolean exitOnFailure)
+    {
+
+        Reporter.log("<br>");
+
+        try
+        {
+
+            Assert.assertTrue(condition, message);
+            Reporter.log("<Font Color=#008000> PASS </Font>" + message);
+
+        }
+        catch (AssertionError e)
+        {
+            LOGGER.info(message);
+            this.testCaseStatus = false;
+
+            if (screenshotOnFailure)
+            {
+                Reporter.log("<Font Color=red> FAIL </Font> " + message + " Actual: FALSE Expected: TRUE."
+                    + " Please check the screenshot " + "<a href='" + screenShot()
+                    + "'> <Font Color=red> here </Font> </a>");
+
+            }
+            else
+            {
+
+                Reporter.log("<Font Color=red> FAIL </Font> " + message);
+
+            }
+
+            if (exitOnFailure)
+            {
+                Reporter.log("<br>");
+
+                Reporter.log("Exiting this function as exitOnFail flag is set to True.");
+
+                throw e;
+
+            }
+
+        }
+
+        return this.testCaseStatus;
+    }
+
+    /**
+     * methode Check field is empty.
+     * @param elementAttr
+     */
+    public void checkFieldIsEmpty(WebElement elementAttr)
+    {
+        WebElement inputText = elementAttr;
+        String text = inputText.getAttribute("value");
+
+        if (text.isEmpty())
+        {
+        	LOGGER.info("input box is empty");
+        }
+    }
+
+    /**
+     * methode Text exist find elemnts.
+     * @param elementAttr 
+     */
+    public void textExistFindElemnts(List<WebElement> elementAttr)
+    {
+        List<WebElement> list = elementAttr;
+
+        if (list.size() > 0)
+        {
+        	LOGGER.info("Text is present.");
+        }
+        else
+        {
+        	LOGGER.info("Text is not present.");
+        }
+    }
+
+    /**
+     * methode Text pg source to check if text exisit in field.
+     * @param text 
+     */
+    public void textPgSource(String text)
+    {
+        if (driver.getPageSource().contains(text))
+        {
+            LOGGER.info("Text is present.");
+        }
+        else
+        {
+        	LOGGER.info("Text is not present.");
+        }
+    }
+
 
 }
