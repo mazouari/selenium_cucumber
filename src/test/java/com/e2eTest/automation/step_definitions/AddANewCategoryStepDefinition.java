@@ -73,7 +73,6 @@ public class AddANewCategoryStepDefinition {
 
 	@Then("Je vérifie que la nouvelle categorie a ete ajoutee {string}")
 	public void jeVérifieQueLaNouvelleCategorieAEteAjoutee(String text1) {
-		// seleniumUtils.waitForElementToBeClickable(AddANewCategoryPage.getAlertSuccess());
 		String message1 = AddANewCategoryPage.getAlertSuccess().getText();
 		Assert.assertTrue(message1.contains(text1));
 	}

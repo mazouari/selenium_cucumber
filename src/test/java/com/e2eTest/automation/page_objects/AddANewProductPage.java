@@ -45,5 +45,5 @@ public class AddANewProductPage extends BasePage {
 
 	public static WebElement getProductManufacturers() {
 		return productManufacturers;
-	}	
+	}
 }
