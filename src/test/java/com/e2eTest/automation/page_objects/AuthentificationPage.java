@@ -18,13 +18,13 @@ public class AuthentificationPage extends BasePage {
 
 	@FindBy(how = How.XPATH, using = "//button[@type='submit']")
 	private static WebElement btnLogin;
-	
+
 	@FindBy(how = How.XPATH, using = "//h1[normalize-space()='Dashboard']")
 	private static WebElement dashboard;
-	
+
 	@FindBy(how = How.XPATH, using = "//a[normalize-space()='Logout']")
 	private static WebElement btnLogout;
-	
+
 	public AuthentificationPage() {
 		super(Setup.getDriver());
 	}
@@ -40,15 +40,13 @@ public class AuthentificationPage extends BasePage {
 	public static WebElement getBtnLogin() {
 		return btnLogin;
 	}
-	
+
 	public static WebElement getBtnLogout() {
 		return btnLogout;
 	}
-	
+
 	public static WebElement getDashboard() {
 		return dashboard;
 	}
-	
-	
 
 }

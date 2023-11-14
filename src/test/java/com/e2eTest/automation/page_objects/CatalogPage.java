@@ -9,8 +9,6 @@ import com.e2eTest.automation.utils.Setup;
 
 public class CatalogPage extends BasePage {
 
-	/* Retrieve web elements */
-
 	@FindBy(how = How.XPATH, using = "//p[normalize-space()='Catalog']")
 	private static WebElement menuCatalog;
 
@@ -24,7 +22,7 @@ public class CatalogPage extends BasePage {
 	private static WebElement btnSearch;
 
 	@FindBy(how = How.XPATH, using = "//td[normalize-space()='Lenovo IdeaCentre 600 All-in-One PC']")
-	private static WebElement nbrResults;
+	private static WebElement elementResult;
 
 	public CatalogPage() {
 		super(Setup.getDriver());
@@ -46,8 +44,8 @@ public class CatalogPage extends BasePage {
 		return btnSearch;
 	}
 
-	public static WebElement getNbrResults() {
-		return nbrResults;
+	public static WebElement getElementResult() {
+		return elementResult;
 	}
 
 }

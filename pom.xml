@@ -24,17 +24,17 @@
 		<cucumberjava.version>7.14.0</cucumberjava.version>
 		<cucumberjunit.version>7.14.0</cucumberjunit.version>
 		<commons.version>2.15.0</commons.version>
-		<pdf.version>1.8.1</pdf.version>
+		<pdf.version>1.8.17</pdf.version>
 		<recorder.version>0.7.7.0</recorder.version>
-		<csv.version>1.1</csv.version>
+		<csv.version>1.10.0</csv.version>
 		<screenshot.version>1.5.4</screenshot.version>
 		<jasypt.version>1.9.3</jasypt.version>
-		<testng.version>7.5</testng.version>
-		<poi.version>3.13</poi.version>
+		<testng.version>7.8.0</testng.version>
+		<poi.version>3.16</poi.version>
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>

@@ -10,10 +10,15 @@ Feature: Je veux ajouter un nouveau produit
 
   @addnewproduct-valid
   Scenario: Je veux ajouter un nouveau produit
-    When Je clique sur menu Catalog
-    And Je clique sur menu Products
-    And Je clique sur bouton Add new
-    And Je saisis nom du produit "alpha"
-    And Je saisis a short description "this is a short description"
-    And Je saisis a full description "this is a full description"
-    Then Je clique sur le bouton Save
+   When Je clique sur le menu Catalog
+    And Je clique sur le menu Products
+     And Je clique sur le bouton Add new
+     And Je saisis un nom "test-produit"
+     And Je saisis a short description "this is a short description"
+    And Je saisis a full description "This is a full description"
+    And je saisis un SKU "This is the SKU"
+    #And Je selectionne une categories Books
+    #And Je selectionne un manufacturers HP
+    And Je clique sur le bouton Save
+    Then Je vérifie que la nouvelle categorie a ete ajoutee "The new product has been added successfully."
+    
