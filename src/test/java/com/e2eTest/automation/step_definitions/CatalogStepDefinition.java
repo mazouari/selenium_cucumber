@@ -42,9 +42,9 @@ public class CatalogStepDefinition {
 	}
 
 	@Then("le resultat de recherche affiche est  {string}")
-	public void leResultatDeRechercheAfficheEst(String text1) {
+	public void leResultatDeRechercheAfficheEst(String text) {
 		seleniumUtils.waitForElementToBeClickable(CatalogPage.getElementResult());
-		String message1 = CatalogPage.getElementResult().getText();
-		Assert.assertEquals(message1, text1);
+		String message = CatalogPage.getElementResult().getText();
+		Assert.assertEquals(message, text);
 	}
 }

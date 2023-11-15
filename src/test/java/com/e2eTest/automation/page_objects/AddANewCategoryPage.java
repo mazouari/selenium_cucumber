@@ -17,11 +17,13 @@ public class AddANewCategoryPage extends BasePage {
 	@FindBy(how = How.ID, using = "Name")
 	private static WebElement name;
 
-	@FindBy(how = How.XPATH, using = "//iframe[@id='Description_ifr']")
+	@FindBy(how = How.ID, using = "Description_ifr")
 	private static WebElement champDescription;
 
 	@FindBy(how = How.ID, using = "ParentCategoryId")
 	private static WebElement parentCategory;
+	
+	private static int parentCategoryIndex = 15;
 
 	@FindBy(how = How.XPATH, using = "//input[@title='file input']")
 	private static WebElement btnUploadFile;
@@ -58,6 +60,10 @@ public class AddANewCategoryPage extends BasePage {
 	public static WebElement getParentCategory() {
 		return parentCategory;
 	}
+	
+	 public static int getParentCategoryIndex() {
+	        return parentCategoryIndex;
+	    }
 
 	public static WebElement getBtnUploadFile() {
 		return btnUploadFile;

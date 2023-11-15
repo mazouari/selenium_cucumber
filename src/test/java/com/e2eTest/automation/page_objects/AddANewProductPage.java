@@ -20,6 +20,8 @@ public class AddANewProductPage extends BasePage {
 	@FindBy(how = How.ID, using = "SelectedCategoryIds")
 	private static WebElement productCategories;
 
+	private static int productCategoryIndex = 15;
+
 	@FindBy(how = How.ID, using = "SelectedManufacturerIds")
 	private static WebElement productManufacturers;
 
@@ -41,6 +43,10 @@ public class AddANewProductPage extends BasePage {
 
 	public static WebElement getProductCategories() {
 		return productCategories;
+	}
+
+	public static int getProductCategoryIndex() {
+		return productCategoryIndex;
 	}
 
 	public static WebElement getProductManufacturers() {

@@ -17,7 +17,7 @@ Feature: Je veux ajouter un nouveau produit
     And Je saisis a short description "this is a short description"
     And Je saisis a full description "This is a full description"
     And je saisis un SKU "This is the SKU"
-    #And Je selectionne une categories Books
+    #And Je selectionne une categories Books "14"
     #And Je selectionne un manufacturers HP
     And Je clique sur le bouton Save
-    Then Je vérifie que la nouvelle categorie a ete ajoutee "The new product has been added successfully."
+    Then Je verifie que la nouvelle categorie a ete ajoutee "The new product has been added successfully."

@@ -49,14 +49,16 @@ public class AddANewProductStepDefinition {
 		seleniumUtils.writeText(AddANewProductPage.getChampSku(), champSku);
 	}
 
-	@When("Je selectionne une categories Books")
-	public void jeSelectionneUneCategoriesBooks() {
+	@When("Je selectionne une categories Books {string}")
+	public void jeSelectionneUneCategoriesBooks(String productCategoryIndex) {
+		int index = Integer.parseInt(productCategoryIndex);
 		Select select = new Select(AddANewProductPage.getProductCategories());
-		select.selectByIndex(14);
+		select.selectByIndex(index);
 	}
 
 	@When("Je selectionne un manufacturers HP")
 	public void jeSelectionneUnManufacturersHP() {
+
 		Select select = new Select(AddANewProductPage.getProductManufacturers());
 		select.selectByIndex(1);
 	}

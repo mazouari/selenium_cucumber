@@ -41,27 +41,28 @@ public class AddANewCategoryStepDefinition {
 		seleniumUtils.writeText(AddANewCategoryPage.getName(), name);
 	}
 
-	@When("Je saisis une description {string}")
-	public void jeSaisisUneDescription(String champDescription) {
+	@When("Je saisis une description {string} {string}")
+	public void jeSaisisUneDescription(String champDescription, String descriptionFrameID) {
 		seleniumUtils.click(AddANewCategoryPage.getChampDescription());
-		seleniumUtils.switchToNewWindow(Setup.getDriver(), "Description_ifr");
+		seleniumUtils.switchToNewWindow(Setup.getDriver(), descriptionFrameID);
 		Setup.getDriver().switchTo().activeElement().sendKeys(champDescription);
 		Setup.getDriver().switchTo().defaultContent();
 	}
 
-	@When("Je selectionne une parent category Books")
-	public void jeSelectionneUneParentCategoryBooks() {
+	@When("Je selectionne une parent category Books {string}")
+	public void jeSelectionneUneParentCategoryBooks(String parentCategoryIndex) {
+		int index = Integer.parseInt(parentCategoryIndex);
 		Select select = new Select(AddANewCategoryPage.getParentCategory());
-		select.selectByIndex(15);
+		select.selectByIndex(index);
 	}
 
 	@When("Je charge un fichier {string}")
 	public void jeChargeUnFichier(String filePath) {
-		AddANewCategoryPage.getBtnUploadFile().sendKeys(filePath);
+		seleniumUtils.writeText(AddANewCategoryPage.getBtnUploadFile(), filePath);
 	}
 
-	@When("Je vérifie que le fichier a bien ete charge")
-	public void jeVérifieQueLeFichierABienEteCharge() {
+	@When("Je verifie que le fichier a bien ete charge")
+	public void jeVerifieQueLeFichierABienEteCharge() {
 		WebDriverWait wait = new WebDriverWait(Setup.getDriver(), Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf(AddANewCategoryPage.getUploadSuccess()));
 	}
@@ -71,10 +72,10 @@ public class AddANewCategoryStepDefinition {
 		seleniumUtils.click(AddANewCategoryPage.getBtnSave());
 	}
 
-	@Then("Je vérifie que la nouvelle categorie a ete ajoutee {string}")
-	public void jeVérifieQueLaNouvelleCategorieAEteAjoutee(String text1) {
-		String message1 = AddANewCategoryPage.getAlertSuccess().getText();
-		Assert.assertTrue(message1.contains(text1));
+	@Then("Je verifie que la nouvelle categorie a ete ajoutee {string}")
+	public void jeVerifieQueLaNouvelleCategorieAEteAjoutee(String text) {
+		String message = AddANewCategoryPage.getAlertSuccess().getText();
+		Assert.assertTrue(message.contains(text));
 	}
 
 }
