@@ -15,10 +15,10 @@ public class CatalogPage extends BasePage {
 	@FindBy(how = How.XPATH, using = "//p[normalize-space()='Products']")
 	private static WebElement menuProducts;
 
-	@FindBy(how = How.XPATH, using = "//input[@id='SearchProductName']")
+	@FindBy(how = How.ID, using = "SearchProductName")
 	private static WebElement champProductName;
 
-	@FindBy(how = How.XPATH, using = "//button[@id='search-products']")
+	@FindBy(how = How.ID, using = "search-products")
 	private static WebElement btnSearch;
 
 	@FindBy(how = How.XPATH, using = "//td[normalize-space()='Lenovo IdeaCentre 600 All-in-One PC']")

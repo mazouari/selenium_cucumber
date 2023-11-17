@@ -8,7 +8,7 @@ import com.e2eTest.automation.utils.Setup;
 
 public class AddANewProductPage extends BasePage {
 
-	@FindBy(how = How.XPATH, using = "//textarea[@id='ShortDescription']")
+	@FindBy(how = How.ID, using = "ShortDescription")
 	private static WebElement champShortDescription;
 
 	@FindBy(how = How.ID, using = "FullDescription_ifr")
@@ -17,7 +17,7 @@ public class AddANewProductPage extends BasePage {
 	@FindBy(how = How.ID, using = "Sku")
 	private static WebElement champSku;
 
-	@FindBy(how = How.ID, using = "SelectedCategoryIds")
+	@FindBy(how = How.ID, using = "SelectedCategoryIds_taglist")
 	private static WebElement productCategories;
 
 	private static int productCategoryIndex = 15;
