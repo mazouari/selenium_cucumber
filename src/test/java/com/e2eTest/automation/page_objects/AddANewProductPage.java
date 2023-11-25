@@ -17,13 +17,32 @@ public class AddANewProductPage extends BasePage {
 	@FindBy(how = How.ID, using = "Sku")
 	private static WebElement champSku;
 
-	@FindBy(how = How.ID, using = "SelectedCategoryIds_taglist")
+	@FindBy(how = How.XPATH, using = "//div[@class='form-group row']//input[@role='listbox']")
 	private static WebElement productCategories;
 
-	private static int productCategoryIndex = 15;
+	@FindBy(how = How.XPATH, using = "//li[normalize-space()='Computers']")
+	private static WebElement productCategoriesClick;
 
-	@FindBy(how = How.ID, using = "SelectedManufacturerIds")
+	@FindBy(how = How.XPATH, using = "(//input[@role='listbox'])[2]")
 	private static WebElement productManufacturers;
+
+	@FindBy(how = How.XPATH, using = "//li[contains(text(),'HP')]")
+	private static WebElement productManufacturersClick;
+
+	@FindBy(how = How.ID, using = "SelectedManufacturerIds_label")
+	private static WebElement manufacturersCaseName;
+
+	@FindBy(how = How.XPATH, using = "//input[@id='Published']")
+	private static WebElement publishedCase;
+
+	@FindBy(how = How.XPATH, using = "//div[normalize-space()='Enter tags ...']")
+	private static WebElement productTagsField;
+
+	@FindBy(how = How.XPATH, using = "//input[@class='ui-autocomplete-input']")
+	private static WebElement writeInproductTagsField;
+
+	@FindBy(how = How.ID, using = "AllowCustomerReviews")
+	private static WebElement allowCustomerReviews;
 
 	public AddANewProductPage() {
 		super(Setup.getDriver());
@@ -45,11 +64,35 @@ public class AddANewProductPage extends BasePage {
 		return productCategories;
 	}
 
-	public static int getProductCategoryIndex() {
-		return productCategoryIndex;
+	public static WebElement getProductCategoriesClick() {
+		return productCategoriesClick;
 	}
 
 	public static WebElement getProductManufacturers() {
 		return productManufacturers;
+	}
+
+	public static WebElement getProductManufacturersClick() {
+		return productManufacturersClick;
+	}
+
+	public static WebElement getManufacturersCaseName() {
+		return manufacturersCaseName;
+	}
+
+	public static WebElement getPublishedCase() {
+		return publishedCase;
+	}
+
+	public static WebElement getProductTagsField() {
+		return productTagsField;
+	}
+
+	public static WebElement getWriteInproductTagsField() {
+		return writeInproductTagsField;
+	}
+
+	public static WebElement getAllowCustomerReviews() {
+		return allowCustomerReviews;
 	}
 }

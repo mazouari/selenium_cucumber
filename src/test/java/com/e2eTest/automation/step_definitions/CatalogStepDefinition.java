@@ -16,7 +16,6 @@ public class CatalogStepDefinition {
 		seleniumUtils = new SeleniumUtils();
 		catalogPage = new CatalogPage();
 		authentificationPage = new AuthentificationPage();
-
 	}
 
 	@When("Je clique sur le menu Catalog")
@@ -28,15 +27,15 @@ public class CatalogStepDefinition {
 	public void jeCliqueSurLeMenuProducts() {
 		seleniumUtils.waitForElementToBeClickable(CatalogPage.getMenuProducts());
 		seleniumUtils.click(CatalogPage.getMenuProducts());
-
 	}
 
 	@When("Je saisis le produit {string}")
-	public void jeSaisisLeProduit(String champProductName) {
+	public void jeSaisisLeProduit(String champProductName) throws InterruptedException {
+		Thread.sleep(5000);
 		seleniumUtils.writeText(CatalogPage.getChampProductName(), champProductName);
 	}
 
-	@When("je clique sur le bouton Search")
+	@When("Je clique sur le bouton Search")
 	public void jeCliqueSurLeBoutonSearch() {
 		seleniumUtils.click(CatalogPage.getBtnSearch());
 	}

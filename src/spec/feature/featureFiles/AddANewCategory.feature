@@ -1,4 +1,4 @@
-@addanewcategory
+@addanewcategory @regression
 Feature: Je veux ajouter une nouvelle categorie
   ETQ vendeur Je veux ajouter une nouvelle categorie
 

@@ -13,5 +13,5 @@ Feature: Je souhaite chercher un poduit
     When Je clique sur le menu Catalog
     And Je clique sur le menu Products
     And Je saisis le produit "lenovo"
-    And je clique sur le bouton Search
+    And Je clique sur le bouton Search
     Then le resultat de recherche affiche est  "Lenovo IdeaCentre 600 All-in-One PC"

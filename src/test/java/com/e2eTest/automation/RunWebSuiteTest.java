@@ -21,7 +21,7 @@ import static io.cucumber.junit.CucumberOptions.SnippetType.CAMELCASE;
 		features = {"src/spec/feature"},
 		// glue = {"step_definitions"}
 		plugin = { "pretty", "html:target/cucumber-report.html", "json:target/cucumber.json" },
-		tags = ("@catalog"),
+		tags = ("@addanewcategory"),
 		monochrome = true,
 		snippets = CAMELCASE
 		)

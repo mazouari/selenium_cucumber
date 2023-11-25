@@ -9,9 +9,12 @@ import java.awt.event.KeyEvent;
 
 import java.io.FileInputStream;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -21,8 +24,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -325,7 +330,7 @@ public class SeleniumUtils extends BasePage {
 	public void autoSuggest(WebElement elementWeb, String writeText, String textToSelect) throws InterruptedException {
 		// start input in input field
 		elementWeb.sendKeys(writeText);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		// get the list of suggestet inputs
 		List<WebElement> options = driver.findElements(By.tagName("li"));
 		// loop through list of inputs an click specific Text + break out the loop
@@ -476,39 +481,205 @@ public class SeleniumUtils extends BasePage {
 		Actions act = new Actions(Setup.getDriver());
 		act.dragAndDrop(from, to).perform();
 	}
-	
-    /**
-     * methode Upload file with robot.
-     *
-     * @param imagePath path of the file
-     */
-    public void uploadFile(String imagePath)
-    {
 
-        StringSelection stringSelection = new StringSelection(imagePath);
-        Clipboard clipBoard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipBoard.setContents(stringSelection, null);
+	/**
+	 * methode Upload file with robot.
+	 *
+	 * @param imagePath path of the file
+	 */
+	public void uploadFile(String imagePath) {
 
-        Robot robot = null;
-        try
-        {
-            robot = new Robot();
-        }
-        catch (AWTException e)
-        {
-        	LOGGER.info(e);
-        }
+		StringSelection stringSelection = new StringSelection(imagePath);
+		Clipboard clipBoard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipBoard.setContents(stringSelection, null);
 
-        robot.delay(250);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.delay(150);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-    }
+		Robot robot = null;
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			LOGGER.info(e);
+		}
+
+		robot.delay(250);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.delay(150);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+	}
+
+	/**
+	 * Method to refresh an element.
+	 *
+	 * @param element The element to refresh.
+	 * @return WebElement after refresh.
+	 */
+	public WebElement refreshElement(WebElement element) {
+		int attempts = 0;
+		while (attempts < 2) {
+			try {
+				element.isDisplayed(); // This method forces a visibility check.
+				return element;
+			} catch (StaleElementReferenceException e) {
+				LOGGER.info("StaleElementReferenceException detected. Attempting to refresh element.");
+				element = driver.findElement((By) element);
+			}
+			attempts++;
+		}
+		throw new StaleElementReferenceException("Unable to refresh element after 2 attempts.");
+	}
+
+	public void selectDateFromDatePicker(By datePickerLocator, LocalDate dateToSelect) {
+		while (!driver.findElement(By.cssSelector("[class='datepicker-days'] [class='datepicker-switch']")).getText()
+				.contains("November")) {
+			driver.findElement(By.cssSelector("[class='datepicker-days'] th[class='next']")).click();
+		}
+
+		List<WebElement> dates = driver.findElements(By.className("day"));
+		// Grab common attribute//Put into list and iterate
+		int count = driver.findElements(By.className("day")).size();
+
+		for (int i = 0; i < count; i++) {
+			String text = driver.findElements(By.className("day")).get(i).getText();
+			if (text.equalsIgnoreCase("21")) {
+				driver.findElements(By.className("day")).get(i).click();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Switch to the new window and return the WebDriver of the target window.
+	 *
+	 * @return The WebDriver of the target window.
+	 */
+	public WebDriver switchToNewWindowWithoutIframe() {
+		String parentWindowHandle = driver.getWindowHandle();
+		Set<String> windowHandles = driver.getWindowHandles();
+
+		for (String windowHandle : windowHandles) {
+			if (!windowHandle.equals(parentWindowHandle)) {
+				driver.switchTo().window(windowHandle);
+				return driver; // Return the WebDriver of the target window
+			}
+		}
+
+		return driver; // Return the WebDriver of the parent window just in case
+	}
+
+	/**
+	 * Switch to the default content.
+	 */
+	public void switchToDefaultContent() {
+		if (driver != null) {
+			driver.switchTo().defaultContent();
+		} else {
+			System.out.println("The driver (WebDriver) is not initialized.");
+		}
+	}
+
+	/**
+	 * Switch to the parent window and return the WebDriver of the parent window.
+	 *
+	 * @return The WebDriver of the parent window.
+	 */
+	public WebDriver switchToParentWindow() {
+		String parentWindowHandle = driver.getWindowHandle();
+		Set<String> windowHandles = driver.getWindowHandles();
+
+		for (String windowHandle : windowHandles) {
+			if (windowHandle.equals(parentWindowHandle)) {
+				driver.switchTo().window(windowHandle);
+				return driver; // Return the WebDriver of the parent window
+			}
+		}
+
+		return driver; // Return the WebDriver of the current window just in case
+	}
+
+	/**
+	 * Click on an empty space on the page using JavaScript.
+	 *
+	 * @param driver The WebDriver instance.
+	 */
+	public static void clickOnEmptySpace(WebDriver driver) {
+		// Using JavaScript to click on an empty part of the page
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("document.body.click();");
+	}
+
+	/**
+	 * Scroll the page to bring the specified element into view.
+	 *
+	 * @param element The WebElement to scroll to.
+	 */
+	public void scrollIntoView(WebElement element) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+
+	/**
+	 * Wait for a specific number of windows to be open.
+	 *
+	 * @param driver           The WebDriver instance.
+	 * @param expectedCount    The expected number of windows.
+	 * @param timeoutInSeconds The maximum time to wait.
+	 */
+	public static void waitForNumberOfWindowsToBe(WebDriver driver, int expectedCount, Duration timeoutInSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+		wait.until(ExpectedConditions.numberOfWindowsToBe(expectedCount));
+	}
+
+	/**
+	 * Method to get the Session ID.
+	 *
+	 * @return Session ID
+	 */
+	public String getSessionId() {
+		if (driver instanceof ChromeDriver) {
+			return ((ChromeDriver) driver).getSessionId().toString();
+		} else {
+			// Add checks for other driver types if necessary
+			throw new UnsupportedOperationException("This method only supports ChromeDriver currently.");
+		}
+	}
+
+	/**
+	 * Method to close the current window.
+	 */
+	public void closeCurrentWindow() {
+		Setup.getDriver().close();
+	}
+
+	/**
+	 * Method to switch to a specific window using its handle.
+	 *
+	 * @param windowHandle The handle of the window to switch to.
+	 */
+	public void switchToWindow(String windowHandle) {
+		Setup.getDriver().switchTo().window(windowHandle);
+	}
+
+	/**
+	 * Method to retrieve the window handles.
+	 *
+	 * @return Set of window handles.
+	 */
+	public Set<String> getWindowHandles() {
+		return Setup.getDriver().getWindowHandles();
+	}
+
+	/**
+	 * Method to close a specific window using its handle.
+	 *
+	 * @param windowHandle The handle of the window to close.
+	 */
+	public void closeWindow(String windowHandle) {
+		Setup.getDriver().switchTo().window(windowHandle);
+		Setup.getDriver().close();
+	}
 
 }

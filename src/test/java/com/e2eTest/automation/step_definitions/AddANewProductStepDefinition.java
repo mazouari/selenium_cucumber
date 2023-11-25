@@ -1,6 +1,5 @@
 package com.e2eTest.automation.step_definitions;
 
-import org.openqa.selenium.support.ui.Select;
 import com.e2eTest.automation.page_objects.AddANewCategoryPage;
 import com.e2eTest.automation.page_objects.AddANewProductPage;
 import com.e2eTest.automation.page_objects.AuthentificationMultiUsersPage;
@@ -8,7 +7,6 @@ import com.e2eTest.automation.page_objects.AuthentificationPage;
 import com.e2eTest.automation.page_objects.CatalogPage;
 import com.e2eTest.automation.utils.SeleniumUtils;
 import com.e2eTest.automation.utils.Setup;
-
 import io.cucumber.java.en.When;
 
 public class AddANewProductStepDefinition {
@@ -37,7 +35,6 @@ public class AddANewProductStepDefinition {
 
 	@When("Je saisis a full description {string}")
 	public void jeSaisisAFullDescription(String champFullDescription) {
-
 		seleniumUtils.click(AddANewProductPage.getChampFullDescription());
 		seleniumUtils.switchToNewWindow(Setup.getDriver(), "FullDescription_ifr");
 		Setup.getDriver().switchTo().activeElement().sendKeys(champFullDescription);
@@ -49,18 +46,43 @@ public class AddANewProductStepDefinition {
 		seleniumUtils.writeText(AddANewProductPage.getChampSku(), champSku);
 	}
 
-	@When("Je selectionne une categories Books {string}")
-	public void jeSelectionneUneCategoriesBooks(String productCategoryIndex) {
-		int index = Integer.parseInt(productCategoryIndex);
-		Select select = new Select(AddANewProductPage.getProductCategories());
-		select.selectByIndex(index);
+	@When("Je selectionne une categories {string}")
+	public void jeSelectionneUneCategories(String productCategoryIndex) {
+		seleniumUtils.writeText(AddANewProductPage.getProductCategories(), productCategoryIndex);
+		seleniumUtils.waitForElementToBeClickable(AddANewProductPage.getProductCategoriesClick());
+		seleniumUtils.click(AddANewProductPage.getProductCategoriesClick());
 	}
 
-	@When("Je selectionne un manufacturers HP")
-	public void jeSelectionneUnManufacturersHP() {
-
-		Select select = new Select(AddANewProductPage.getProductManufacturers());
-		select.selectByIndex(1);
+	@When("Je selectionne un manufacturers {string}")
+	public void jeSelectionneUnManufacturers(String productManufacturers) {
+		seleniumUtils.writeText(AddANewProductPage.getProductManufacturers(), productManufacturers);
+		seleniumUtils.waitForElementToBeClickable(AddANewProductPage.getProductManufacturersClick());
+		seleniumUtils.click(AddANewProductPage.getProductManufacturersClick());
 	}
 
+	@When("Je clique sur le formulaire")
+	public void JeCliqueSurLeFormulaire() {
+		seleniumUtils.click(AddANewProductPage.getManufacturersCaseName());
+	}
+
+	@When("Je deselctionne la case published")
+	public void jeDeselctionneLaCasePublished() {
+		seleniumUtils.click(AddANewProductPage.getPublishedCase());
+	}
+
+	@When("Je clique dans le champ products tags")
+	public void jeCliqueDansLeChampProductsTags() {
+		seleniumUtils.click(AddANewProductPage.getProductTagsField());
+	}
+
+	@When("Je selectionne un product tags {string}")
+	public void jeSelectionneUnProductTags(String writeInproductTagsField) throws InterruptedException {
+		seleniumUtils.autoSuggest(AddANewProductPage.getWriteInproductTagsField(), writeInproductTagsField,
+				writeInproductTagsField);
+	}
+
+	@When("Je deselectionne la case allow customer reviews")
+	public void jeDeselectionneLaCaseAllowCustomerReviews() {
+		seleniumUtils.click(AddANewProductPage.getAllowCustomerReviews());
+	}
 }
