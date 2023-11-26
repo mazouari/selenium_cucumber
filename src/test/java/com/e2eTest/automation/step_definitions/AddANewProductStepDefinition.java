@@ -85,4 +85,11 @@ public class AddANewProductStepDefinition {
 	public void jeDeselectionneLaCaseAllowCustomerReviews() {
 		seleniumUtils.click(AddANewProductPage.getAllowCustomerReviews());
 	}
+
+	@When("Je selectionne une date de debut {string}")
+	public void jeSelectionneUneDate(String date) throws InterruptedException {
+		AddANewProductPage.getChampDate().clear();
+		AddANewProductPage.getChampDate().sendKeys(date);
+	}
+
 }

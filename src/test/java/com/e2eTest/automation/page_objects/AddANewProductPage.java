@@ -44,6 +44,9 @@ public class AddANewProductPage extends BasePage {
 	@FindBy(how = How.ID, using = "AllowCustomerReviews")
 	private static WebElement allowCustomerReviews;
 
+	@FindBy(how = How.ID, using = "AvailableStartDateTimeUtc")
+	private static WebElement champDate;
+
 	public AddANewProductPage() {
 		super(Setup.getDriver());
 	}
@@ -94,5 +97,9 @@ public class AddANewProductPage extends BasePage {
 
 	public static WebElement getAllowCustomerReviews() {
 		return allowCustomerReviews;
+	}
+
+	public static WebElement getChampDate() {
+		return champDate;
 	}
 }

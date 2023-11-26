@@ -682,4 +682,14 @@ public class SeleniumUtils extends BasePage {
 		Setup.getDriver().close();
 	}
 
+	/**
+	 * Finds an element by the given CSS selector and returns the WebElement.
+	 *
+	 * @param selector The CSS selector used to locate the element.
+	 * @return The WebElement located by the specified selector.
+	 */
+	public WebElement findElementBySelector(String selector) {
+		return driver.findElement(By.cssSelector(selector));
+	}
+
 }
