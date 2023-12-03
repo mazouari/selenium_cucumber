@@ -8,6 +8,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +34,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.*;
 
 /**
  * This class contains all the methods required by selenium to perform actions
@@ -690,6 +698,31 @@ public class SeleniumUtils extends BasePage {
 	 */
 	public WebElement findElementBySelector(String selector) {
 		return driver.findElement(By.cssSelector(selector));
+	}
+	
+	public JSONObject JsonData(int i)
+	{
+		JSONParser parser = new JSONParser();
+
+		try {
+			Object obj = parser.parse(new FileReader("./src/test/resources/testData/configFile.json"));
+
+			JSONArray array = (JSONArray) obj;
+			JSONObject jsonObject = (JSONObject) array.get(i);
+
+			return jsonObject;
+
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

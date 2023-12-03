@@ -1,4 +1,4 @@
-@addnewcustomerroles
+@addnewcustomerroles @regression
 Feature: Je veux ajouter un nouveau role
   ETQ Je veux ajouter un nouveau role
 

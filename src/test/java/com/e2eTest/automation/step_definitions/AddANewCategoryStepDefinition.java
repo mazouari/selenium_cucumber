@@ -1,6 +1,8 @@
 package com.e2eTest.automation.step_definitions;
 
 import java.time.Duration;
+
+import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -12,21 +14,25 @@ import com.e2eTest.automation.utils.Setup;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class AddANewCategoryStepDefinition {
+public class AddANewCategoryStepDefinition extends SeleniumUtils {
 
 	private AuthentificationPage authentificationPage;
 	private SeleniumUtils seleniumUtils;
 	private AddANewCategoryPage addANewCategoryPage;
+	static JSONObject object;
+	public static long mediumwait = Long.valueOf((String) object.get("mediumwait"));
 
 	public AddANewCategoryStepDefinition() {
 
 		seleniumUtils = new SeleniumUtils();
 		authentificationPage = new AuthentificationPage();
 		addANewCategoryPage = new AddANewCategoryPage();
+		object = seleniumUtils.JsonData(0);
 	}
 
 	@When("Je clique sur le menu Categories")
-	public void jeCliqueSurLeMenuCategories() {
+	public void jeCliqueSurLeMenuCategories() throws InterruptedException {
+		Thread.sleep(mediumwait);
 		seleniumUtils.waitForElementToBeClickable(AddANewCategoryPage.getMenuCategories());
 		seleniumUtils.click(AddANewCategoryPage.getMenuCategories());
 	}
